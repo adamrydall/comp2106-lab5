@@ -8,12 +8,13 @@ var Account = require('../models/account');
 var gitHub = require('passport-github2');
 var configDb = require('../config/db.js');
 
-passport.serializeUser(function(user, done){
+passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
-
-passport.deserializeUser(function(id, done){
-    done(err, user);
+passport.deserializeUser(function(id, done) {
+    Account.findById(id, function(err, user) {
+        done(err, user);
+    });
 });
 
 //github auth config
